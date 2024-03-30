@@ -1,13 +1,11 @@
 import React from 'react';
-import Head from 'next/head';
 
-import { styled } from '@mui/material';
-import Header from '../components/Header';
 import { GetStaticProps } from 'next';
 import prisma from '../lib/prisma';
+import { Wine } from '../types/Wine';
 
-export default function HomePage(props: { wine: any[] }) {
-    console.log(props.wine);
+export default function HomePage(props: { wine: Wine[] }) {
+    console.log(props.wine[0].color);
     return <></>;
 }
 export const getStaticProps: GetStaticProps = async () => {
