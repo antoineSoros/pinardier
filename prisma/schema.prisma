@@ -1,0 +1,38 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Person {
+  id        String @id @default(cuid())
+  name      String
+  firstName String
+  Wine      Wine[]
+}
+
+model Wine {
+  id           String  @id @default(cuid())
+  name         String
+  region       String?
+  country      String?
+  grapeVariety String?
+  color        String
+  year         Int
+  price        Float?
+  rate         Int?
+  opinion      String?
+  quantity     Int?
+  offerBy      Person? @relation(fields: [id], references: [id])
+}
+
+// Remove the enum definition for Color since the current connector does not support enums.

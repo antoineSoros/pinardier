@@ -1,64 +1,19 @@
-import React from 'react'
-import Head from 'next/head'
-import Image from 'next/image'
-import Button from '@mui/material/Button'
-import Dialog from '@mui/material/Dialog'
-import DialogTitle from '@mui/material/DialogTitle'
-import DialogContent from '@mui/material/DialogContent'
-import DialogContentText from '@mui/material/DialogContentText'
-import DialogActions from '@mui/material/DialogActions'
-import Typography from '@mui/material/Typography'
-import Link from '../components/Link'
-import { styled } from '@mui/material'
+import React from 'react';
+import Head from 'next/head';
 
-const Root = styled('div')(({ theme }) => {
-  return {
-    textAlign: 'center',
-    paddingTop: theme.spacing(4),
-  }
-})
+import { styled } from '@mui/material';
+import Header from '../components/Header';
+import { GetStaticProps } from 'next';
+import prisma from '../lib/prisma';
 
-export default function HomePage() {
-  const [open, setOpen] = React.useState(false)
-  const handleClose = () => setOpen(false)
-  const handleClick = () => setOpen(true)
-
-  return (
-    <React.Fragment>
-      <Head>
-        <title>Home - Nextron (with-material-ui)</title>
-      </Head>
-      <Root>
-        <Dialog open={open} onClose={handleClose}>
-          <DialogTitle>Super Secret Password</DialogTitle>
-          <DialogContent>
-            <DialogContentText>1-2-3-4-5</DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button color="primary" onClick={handleClose}>
-              OK
-            </Button>
-          </DialogActions>
-        </Dialog>
-        <Typography variant="h4" gutterBottom>
-          Material-UI
-        </Typography>
-        <Typography variant="subtitle1" gutterBottom>
-          with Nextron
-        </Typography>
-        <Image
-          src="/images/logo.png"
-          alt="Logo image"
-          width="256px"
-          height="256px"
-        />
-        <Typography gutterBottom>
-          <Link href="/next">Go to the next page</Link>
-        </Typography>
-        <Button variant="contained" color="secondary" onClick={handleClick}>
-          Super Secret Password
-        </Button>
-      </Root>
-    </React.Fragment>
-  )
+export default function HomePage(props: { wine: any[] }) {
+    console.log(props.wine);
+    return <></>;
 }
+export const getStaticProps: GetStaticProps = async () => {
+    const wine = await prisma.wine.findMany();
+    return {
+        props: { wine },
+        revalidate: 10,
+    };
+};
